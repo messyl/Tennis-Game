@@ -51,7 +51,7 @@ public class Player {
 		case 0:
 			return  0;
 		}
-		throw new IllegalArgumentException("Illegal point: " + point);
+		return 40;
 	}
 
 }

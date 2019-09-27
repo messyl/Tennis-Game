@@ -30,6 +30,10 @@ import main.java.tennis.TennisGame;
  *thirtyShouldForScore2
  *fortyShouldBeForScore3
  *gameIsWonAtMoreThanThreePoints
+ *
+ *advantageRuleShouldBeOnPlayer2
+ *advantageRuleShouldBeOnPlayer1
+ *deuceShouldBeWhenAtLeastMoreThanThreeAndSameScoreForThePlayers
  */
 public class TennisGameTest {
 	
@@ -74,7 +78,9 @@ public class TennisGameTest {
     }
 
     
-    @Test
+   /*
+    * A partir de la deuxieme US. ce test n'est plus valable
+    *  @Test
     public void gameIsWonAtMoreThanThreePoints() {
         IntStream.rangeClosed(1, 4).forEach((Integer) -> {
         	nadal.winPoint();
@@ -82,8 +88,65 @@ public class TennisGameTest {
         IntStream.rangeClosed(1, 3).forEach((Integer) -> {
             djoko.winPoint();
         });
-        assertThat(game.getScore(), Is.is("Nadal Win the game"));
-        assertThat(game.getScore(), IsNot.not("Djoko Win the game"));
-    }
+        assertThat(game.getScore(), Is.is("Nadal win the game"));
+        assertThat(game.getScore(), IsNot.not("Djoko win the game"));
+    }*/
 
+    
+    @Test
+    public void afterAWinGameScoreMustBeReset() {
+        IntStream.rangeClosed(1, 4).forEach((Integer) -> {
+        	djoko.winPoint();
+        });
+        assertThat(game.getScore(), Is.is("Djoko win the game"));
+        assertThat(game.getScore(), Is.is("Djoko: 0, Nadal: 0"));
+        
+    }
+    
+    
+    @Test
+    public void advantageRuleShouldBeOnPlayer2() {
+        IntStream.rangeClosed(1, 3).forEach((Integer) -> {
+            djoko.winPoint();
+        });
+        IntStream.rangeClosed(1, 4).forEach((Integer) -> {
+            nadal.winPoint();
+        });
+        assertThat(game.getScore(), Is.is("Djoko: 40, Nadal: ADV"));
+        assertThat(game.getScore(), IsNot.not("Djoko: ADV, Nadal: 0"));
+    }
+    
+    
+    @Test
+    public void advantageRuleShouldBeOnPlayer1() {
+        IntStream.rangeClosed(1, 4).forEach((Integer) -> {
+            djoko.winPoint();
+        });
+        IntStream.rangeClosed(1, 3).forEach((Integer) -> {
+            nadal.winPoint();
+        });
+        assertThat(game.getScore(), Is.is("Djoko: ADV, Nadal: 40"));
+        assertThat(game.getScore(), IsNot.not("Djoko: 0, Nadal: ADV"));
+    }
+    
+
+    @Test
+    public void deuceShouldBeWhenAtLeastMoreThanThreeAndSameScoreForThePlayers() {
+        IntStream.rangeClosed(1, 3).forEach((Integer) -> {
+            djoko.winPoint();
+        });
+        IntStream.rangeClosed(1, 3).forEach((Integer) -> {
+            nadal.winPoint();
+        });
+        assertThat(game.getScore(), Is.is("Djoko: DEUCE, Nadal: DEUCE"));
+        djoko.winPoint();
+        assertThat(game.getScore(), Is.is("Djoko: ADV, Nadal: 40"));
+        nadal.winPoint();
+        assertThat(game.getScore(), Is.is("Djoko: DEUCE, Nadal: DEUCE"));
+        nadal.winPoint();
+        assertThat(game.getScore(), Is.is("Djoko: 40, Nadal: ADV"));
+        nadal.winPoint();
+        assertThat(game.getScore(), Is.is("Nadal win the game"));
+        
+    }
 }
