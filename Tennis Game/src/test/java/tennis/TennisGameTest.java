@@ -31,9 +31,14 @@ import main.java.tennis.TennisGame;
  *fortyShouldBeForScore3
  *gameIsWonAtMoreThanThreePoints
  *
+ *
  *advantageRuleShouldBeOnPlayer2
  *advantageRuleShouldBeOnPlayer1
  *deuceShouldBeWhenAtLeastMoreThanThreeAndSameScoreForThePlayers
+ *
+ *
+ *playerShouldWinTheSetWhenPlayersHasSixAndLessThanFive
+ *playerShouldWinTheSetWhenTheyAreFivePoints
  */
 public class TennisGameTest {
 	
@@ -50,7 +55,7 @@ public class TennisGameTest {
 
     @Test
     public void theScoreShouldStartAtZero0() {
-        TennisGame game = new TennisGame(djoko, nadal);
+    	TennisGame game = new TennisGame(djoko, nadal);
         assertThat(game.getScore(), Is.is("Djoko: 0, Nadal: 0"));
     }
     
@@ -79,7 +84,7 @@ public class TennisGameTest {
 
     
    /*
-    * A partir de la deuxieme US. ce test n'est plus valable
+    * A partir de l'us 2. ce test n'est plus valable
     *  @Test
     public void gameIsWonAtMoreThanThreePoints() {
         IntStream.rangeClosed(1, 4).forEach((Integer) -> {
@@ -95,10 +100,13 @@ public class TennisGameTest {
     
     @Test
     public void afterAWinGameScoreMustBeReset() {
-        IntStream.rangeClosed(1, 4).forEach((Integer) -> {
+    	IntStream.rangeClosed(1, 6).forEach((Integer) -> { // 6 points
+        	djoko.winAGame();
+        });
+    	IntStream.rangeClosed(1, 4).forEach((Integer) -> { // 15 -> 30 -> 40 -> point
         	djoko.winPoint();
         });
-        assertThat(game.getScore(), Is.is("Djoko win the game"));
+        assertThat(game.getScore(), Is.is("Djoko win the set")); 
         assertThat(game.getScore(), Is.is("Djoko: 0, Nadal: 0"));
         
     }
@@ -146,7 +154,56 @@ public class TennisGameTest {
         nadal.winPoint();
         assertThat(game.getScore(), Is.is("Djoko: 40, Nadal: ADV"));
         nadal.winPoint();
-        assertThat(game.getScore(), Is.is("Nadal win the game"));
+        assertThat(game.getScore(), Is.is("Nadal wins the 1st game of the set"));
+        
+    }
+    
+    
+    
+    @Test
+    public void playerShouldWinTheSetWhenPlayersHasSixAndLessThanFive() {
+
+        IntStream.rangeClosed(1, 4).forEach((Integer) -> {
+            djoko.winAGame();
+            game.addGamePlayed();
+        });
+        IntStream.rangeClosed(1, 5).forEach((Integer) -> {
+            nadal.winAGame();
+            game.addGamePlayed();
+        }); 
+        IntStream.rangeClosed(1, 3).forEach((Integer) -> {
+            nadal.winPoint();
+        });
+        nadal.winPoint();
+        assertThat(game.getScore(), Is.is("Nadal win the set"));
+        
+    }
+    
+    @Test
+    public void playerShouldWinTheSetWhenTheyAreFivePoints() {
+
+        IntStream.rangeClosed(1, 5).forEach((Integer) -> {
+            djoko.winAGame();
+            game.addGamePlayed();
+        });
+        IntStream.rangeClosed(1, 5).forEach((Integer) -> {
+            nadal.winAGame();
+            game.addGamePlayed();
+        }); 
+
+        game.getScore();
+        
+        IntStream.rangeClosed(1, 1).forEach((Integer) -> {
+        	djoko.winAGame();
+            game.addGamePlayed();
+        }); 
+        
+        IntStream.rangeClosed(1, 4).forEach((Integer) -> {
+            djoko.winPoint();
+        });
+               
+        assertThat(game.getScore(), Is.is("Djoko win the set"));
+
         
     }
 }

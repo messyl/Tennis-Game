@@ -14,6 +14,10 @@ public class Player {
     
     private String name;
     
+    private int gameWon;
+    
+    private int tieBreakPoint;
+    
     
     /**
      * Constructor
@@ -33,11 +37,24 @@ public class Player {
     }
     
     public void winPoint() {
-        this.point +=  1;
+    	this.point +=  1;
     }
 
     public void resetPoint() {
 		this.point = 0;
+	}
+    
+    
+    public int getGameWon() {
+		return gameWon;
+	}
+
+	public void winAGame() {
+        this.gameWon +=  1;
+    }
+
+    public void resetGame() {
+		this.gameWon = 0;
 	}
 
 	public int getScore() {
@@ -52,6 +69,20 @@ public class Player {
 			return  0;
 		}
 		return 40;
+	}
+	
+	
+	
+    public int getTieBreakPoint() {
+        return tieBreakPoint;
+    }
+    
+    public void winTieBreakPoint() {
+    	this.tieBreakPoint +=  1;
+    }
+
+    public void resetTieBreakPoint() {
+		this.tieBreakPoint = 0;
 	}
 
 }
