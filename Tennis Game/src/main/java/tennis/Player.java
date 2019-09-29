@@ -1,7 +1,5 @@
 package main.java.tennis;
 
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * 

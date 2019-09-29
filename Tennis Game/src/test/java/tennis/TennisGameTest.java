@@ -39,6 +39,10 @@ import main.java.tennis.TennisGame;
  *
  *playerShouldWinTheSetWhenPlayersHasSixAndLessThanFive
  *playerShouldWinTheSetWhenTheyAreFivePoints
+ *
+ *
+ *automaticTieBreakWhenTheyAreBothSix
+ *playerShouldWinInTieBreak
  */
 public class TennisGameTest {
 	
@@ -206,4 +210,54 @@ public class TennisGameTest {
 
         
     }
+    
+
+    
+    @Test
+    public void automaticTieBreakWhenTheyAreBothSix() {
+
+        IntStream.rangeClosed(1, 6).forEach((Integer) -> {
+            djoko.winAGame();
+            game.addGamePlayed();
+        });
+        
+        IntStream.rangeClosed(1, 6).forEach((Integer) -> {
+            nadal.winAGame();
+            game.addGamePlayed();
+        }); 
+
+        
+        djoko.winTieBreakPoint();
+               
+        assertThat(game.getScore(), Is.is("TB/ Djoko: 1, Nadal: 0"));
+
+        
+    }
+    
+    
+    @Test
+    public void playerShouldWinInTieBreak() {
+
+        IntStream.rangeClosed(1, 6).forEach((Integer) -> {
+            djoko.winAGame();
+            game.addGamePlayed();
+        });
+        
+        IntStream.rangeClosed(1, 6).forEach((Integer) -> {
+            nadal.winAGame();
+            game.addGamePlayed();
+        }); 
+
+        
+        IntStream.rangeClosed(1, 9).forEach((Integer) -> {
+            nadal.winTieBreakPoint();
+        }); 
+               
+        IntStream.rangeClosed(1, 7).forEach((Integer) -> {
+        	djoko.winTieBreakPoint();
+        }); 
+        assertThat(game.getScore(), Is.is("Nadal win the set and the match"));
+        
+    }
+
 }

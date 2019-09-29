@@ -11,6 +11,7 @@ public class TennisGame {
 	private Player player2;
 	private Player leadPointPlayer;
 	private Player leadGamePLayer;
+	private Player leadTieBreakPLayer;
 	private int gamesPlayed;
 
 	public TennisGame(Player player1, Player player2) {
@@ -41,6 +42,10 @@ public class TennisGame {
 			player2.resetPoint();
 			//Spint2 - US1 the player win
 			return getSet();
+		} else if (player1.getGameWon() == 6 && player2.getGameWon() == 6) {
+			player1.resetPoint();
+			player2.resetPoint();
+			return getTieBreak();
 		}
 		else {
 			return player1.getName()+": "+player1.getScore() + ", "+player2.getName()+": "+ player2.getScore();
@@ -61,6 +66,9 @@ public class TennisGame {
 			player2.resetGame();
 			resetGamesPlayed();
 			return leadGamePLayer.getName() + " win the set"; 
+			
+		} else if(player1.getGameWon() >= 6 && player1.getGameWon() >= 6) { // Sprint 2 - US2 : Tie Break
+			return getTieBreak();
 		}
 		
 		if(gamesPlayed == 1) {
@@ -69,6 +77,19 @@ public class TennisGame {
 		return leadPointPlayer.getName() + " wins the "+gamesPlayed+"th game of the set";
 
 	}
+	
+	
+	public String getTieBreak() {
+		getLeadTieBreakPlayer();
+		if ((player2.getTieBreakPoint() >= 7 || player2.getTieBreakPoint() >= 7) && Math.abs(player2.getTieBreakPoint() - player1.getTieBreakPoint()) >= 2) {
+			player1.resetTieBreakPoint();
+			player2.resetTieBreakPoint();
+			return leadTieBreakPLayer.getName() + " win the set and the match"; 
+		}else {
+			return "TB/ "+player1.getName()+": "+player1.getTieBreakPoint() + ", "+player2.getName()+": "+ player2.getTieBreakPoint();
+		}
+	}
+	
 	
 	public void resetGamesPlayed() {
 		gamesPlayed = 0;
@@ -96,6 +117,17 @@ public class TennisGame {
 		}else
 		{
 			leadGamePLayer = player2;
+		}
+	}
+	
+	
+	private void getLeadTieBreakPlayer() {
+		if(player1.getTieBreakPoint() > player2.getTieBreakPoint())
+		{
+			leadTieBreakPLayer = player1;
+		}else
+		{
+			leadTieBreakPLayer = player2;
 		}
 	}
 
