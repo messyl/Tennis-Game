@@ -13,6 +13,8 @@ public class TennisGame {
 	private Player leadGamePLayer;
 	private Player leadTieBreakPLayer;
 	private int gamesPlayed;
+	
+	private boolean tieBreakOn;
 
 	public TennisGame(Player player1, Player player2) {
 		this.player1 = player1;
@@ -56,12 +58,8 @@ public class TennisGame {
 		addGamePlayed();
 		getLeadGamePlayer();
 		leadGamePLayer.winAGame();
-		if(player1.getGameWon() >= 7 || player2.getGameWon() >= 7) {
-			player1.resetGame();
-			player2.resetGame();
-			resetGamesPlayed();
-			return leadGamePLayer.getName() + " win the set"; 
-		} else if ( (player1.getGameWon() == 6 && player2.getGameWon() <= 4) || (player1.getGameWon() <= 4 && player2.getGameWon() == 6) ) {
+		if ( (player1.getGameWon() >= 6 || player2.getGameWon() >= 6) 
+				&& Math.abs(player2.getGameWon() - player1.getGameWon()) >= 2) {
 			player1.resetGame();
 			player2.resetGame();
 			resetGamesPlayed();
