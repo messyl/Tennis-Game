@@ -169,11 +169,11 @@ public class TennisGameTest {
 
         IntStream.rangeClosed(1, 4).forEach((Integer) -> {
             djoko.winAGame();
-            game.addGamePlayed();
+            game.getSet().addGamePlayed();
         });
         IntStream.rangeClosed(1, 5).forEach((Integer) -> {
             nadal.winAGame();
-            game.addGamePlayed();
+            game.getSet().addGamePlayed();
         }); 
         IntStream.rangeClosed(1, 3).forEach((Integer) -> {
             nadal.winPoint();
@@ -188,18 +188,18 @@ public class TennisGameTest {
 
         IntStream.rangeClosed(1, 5).forEach((Integer) -> {
             djoko.winAGame();
-            game.addGamePlayed();
+            game.getSet().addGamePlayed();
         });
         IntStream.rangeClosed(1, 5).forEach((Integer) -> {
             nadal.winAGame();
-            game.addGamePlayed();
+            game.getSet().addGamePlayed();
         }); 
 
         game.getScore();
         
         IntStream.rangeClosed(1, 1).forEach((Integer) -> {
         	djoko.winAGame();
-            game.addGamePlayed();
+        	game.getSet().addGamePlayed();
         }); 
         
         IntStream.rangeClosed(1, 4).forEach((Integer) -> {
@@ -218,12 +218,12 @@ public class TennisGameTest {
 
         IntStream.rangeClosed(1, 6).forEach((Integer) -> {
             djoko.winAGame();
-            game.addGamePlayed();
+            game.getSet().addGamePlayed();
         });
         
         IntStream.rangeClosed(1, 6).forEach((Integer) -> {
             nadal.winAGame();
-            game.addGamePlayed();
+            game.getSet().addGamePlayed();
         }); 
 
         
@@ -240,12 +240,12 @@ public class TennisGameTest {
 
         IntStream.rangeClosed(1, 6).forEach((Integer) -> {
             djoko.winAGame();
-            game.addGamePlayed();
+            game.getSet().addGamePlayed();
         });
         
         IntStream.rangeClosed(1, 6).forEach((Integer) -> {
             nadal.winAGame();
-            game.addGamePlayed();
+            game.getSet().addGamePlayed();
         }); 
 
         
